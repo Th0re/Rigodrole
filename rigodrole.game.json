@@ -58,7 +58,7 @@
         },
         "HORIZONTAL_SPEED": {
             "type": "number",
-            "value": "5",
+            "value": "2",
             "min": 0,
             "max": {
                 "type": "number",

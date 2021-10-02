@@ -18,12 +18,14 @@ def make_player(controller, position, spritesheet, horizontalBounds):
       size: xy(16,16),
       acc: xy(0, 0),
       vel: xy(0, 0),
-      density: 0.5,
+      density: 0.1,
       remaining_jumps: 10,
       friction: 50%
   })
 
 def update_player(player):
+   player.spin = 0
+   player.torque = 0
    if player.pos.x < player.horizontalBounds.x:
       entity_move(player, xy(player.horizontalBounds.y, player.pos.y))
    if player.pos.x > player.horizontalBounds.y:
@@ -40,5 +42,12 @@ def playRandomBoing():
    play_sound(boingSound[randomIndex], false, 20)
       
 def draw_player(player):
-   player.sprite = player.spritesheet.idle[⌊mode_frames / 10⌋ mod 2]
+   if player.controller.x != 0:
+      player.sprite = player.spritesheet.moving[⌊mode_frames / 10⌋ mod 2]
+      if player.controller.x > 0:
+         player.scale.x = -1
+      else:
+         player.scale.x = 1
+   else:
+      player.sprite = player.spritesheet.idle[⌊mode_frames / 10⌋ mod 2]
    draw_entity(player)

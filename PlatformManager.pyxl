@@ -26,7 +26,11 @@ def createPlatformRow(fullRow):
 
    // create left platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
+<<<<<<< HEAD
       if leftScreenColumnnPos[platformPosIndex] == 1 or fullRow:
+=======
+      if(leftScreenColumnnPos[platformPosIndex] == 1):
+>>>>>>> bfa6ab9ac8d589f4a63eee15129f411e9f49111f
          push(entity_array, make_entity
          ({
             pos: xy(LEFT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
@@ -55,7 +59,11 @@ def createPlatformRow(fullRow):
 
    // create right platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
+<<<<<<< HEAD
       if rightScreenColumnnPos[platformPosIndex] == 1 or fullRow:
+=======
+      if(rightScreenColumnnPos[platformPosIndex] == 1):
+>>>>>>> bfa6ab9ac8d589f4a63eee15129f411e9f49111f
          push(entity_array, make_entity
             ({
                pos: xy(RIGHT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
