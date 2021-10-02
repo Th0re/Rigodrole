@@ -1,6 +1,6 @@
 // Scripts, variables, and constants here are visible to all modes
 
-let boingSound = [
+let boingSounds = [
    boing_nico_1,
    boing_nico_2,
    boing_nico_3,
@@ -17,68 +17,74 @@ def make_player(controller, position, spritesheet, horizontalBounds):
       size: xy(16,16),
       acc: xy(0, 0),
       vel: xy(0, 0),
-      // density: infinity,
       density: 0.1,
       remaining_jumps: 5,
-      friction: 50%
+      friction: 50%,
+      top: make_entity({
+         relativePos: xy(0,0),
+         size: xy(16, 4)
+      }),
+      bottom: make_entity({
+         relativePos: xy(0,12),
+         size: xy(16, 4)
+      }),
+      left: make_entity({
+         relativePos: xy(0,4),
+         size: xy(4, 8)
+      }),
+      right: make_entity({
+         relativePos: xy(12,4),
+         size: xy(4, 8)
+      })
   })
 
 def update_player(player, platforms):
-   debug_print(player.pos)
    player.spin = 0
    player.torque = 0
    if player.pos.x < player.horizontalBounds.x:
-      entity_move(player, xy(player.horizontalBounds.y, player.pos.y))
+      entity_move(player, xy(player.horizontalBounds.y-1, player.pos.y))
    if player.pos.x > player.horizontalBounds.y:
        entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
    let controller = player.controller
    if controller.x:                   
       player.vel.x = controller.x * HORIZONTAL_SPEED
-   // if controller.x:
-   //    entity_move(player, xy(player.pos.x + controller.x*2, player.pos.y))
-   // if controller.y:
-   //    entity_move(player, xy(player.pos.x, player.pos.y + controller.y*2))
-   //    player.vel.y = controller.y * HORIZONTAL_SPEED
    if controller.aa and player.remaining_jumps > 0:
       playRandomBoing()
-      player.vel.y = -5
-      //--player.remaining_jumps
+      player.vel.y = -6.5
+      --player.remaining_jumps
    
    for platform in platforms:
-      if (abs(player.pos.x - platform.pos.x) < (player.size.x/2 + platform.size.x/2) and abs(player.pos.y - platform.pos.y) < (player.size.y/2 + platform.size.y/2)):
-         // debug_print(platform.pos)
-         // debug_print("(platform)")
-         let angle = xy_to_angle(player.pos - platform.pos)
-         if angle <= pi/4 and angle >= -pi/4:
-            player.vel.x /= 2
-            if player.vel.y > 0:
-               player.vel.y = 0
-               player.acc.y = 0
-               //if (player.pos.y - platform.pos.y) < (player.size.y/2 + platform.size.y/2):
-               //   entity_move(player, xy(player.pos.x, platform.pos.y - (/*player.size.y/2 +*/ platform.size.y/2)))
-               if (player.remaining_jumps < 2):
-                  player.remaining_jumps = 2
-         if angle >= -3pi/4 and angle <= -pi/4:
-            player.vel.x /= 2
+      if overlaps(platform, player, false):
+         player.top.pos = player.pos + player.top.relativePos
+         if overlaps(platform, player.top):
+            player.vel.x /= 1.5
             if player.vel.y < 0:
                player.vel.y = 0
                player.acc.y = 0
-         if angle >= 3pi/4 or angle <= -3pi/4:
+         player.bottom.pos = player.pos + player.bottom.relativePos
+         if overlaps(platform, player.bottom):
+            player.vel.x /= 1.5
+            if player.vel.y > 0:
+               player.vel.y = 0
+               player.acc.y = 0
+               if (player.remaining_jumps < 2):
+                  player.remaining_jumps = 2
+         player.left.pos = player.pos + player.left.relativePos
+         if overlaps(platform, player.left):
             if player.vel.x > 0:
                player.vel.x = 0
                player.acc.x = 0
-         if angle >= pi/4 and angle <= 3pi/4:
-            if player.vel.x < 0:
-               player.vel.x = 0
-               player.acc.x = 0
-   if player.vel.x > 3: player.vel.x = 3
-   if player.vel.x < -3: player.vel.x = -3
+         player.right.pos = player.pos + player.right.relativePos
+         if overlaps(platform, player.right):
+               if player.vel.x < 0:
+                  player.vel.x = 0
+                  player.acc.x = 0
+
    if player.vel.y > 3: player.vel.y = 3
-   if player.vel.y < -3: player.vel.y = -3
 
 def playRandomBoing():
-   let randomIndex = random_integer(0, size(boingSound) - 1)
-   play_sound(boingSound[randomIndex], false, 20)
+   let randomIndex = random_integer(0, size(boingSounds) - 1)
+   play_sound(boingSounds[randomIndex], false, 20)
       
 def draw_player(player):
    if player.controller.x != 0:

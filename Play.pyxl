@@ -50,7 +50,6 @@ platformUpdate(players, dt)
 
 // Physics
 physics_simulate(mainPhysics)
-//draw_physics(mainPhysics)
 
 // Draws
 set_background(rgb(20%, 60%, 90%))

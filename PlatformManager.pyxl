@@ -100,4 +100,3 @@ def platformUpdate(players, dt):
 def platformDraw():
    for platform in entity_array:
       draw_entity(platform)
-      //draw_bounds(platform)
