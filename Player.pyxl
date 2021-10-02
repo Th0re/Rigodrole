@@ -1,12 +1,33 @@
 // Scripts, variables, and constants here are visible to all modes
 
-def make_player(controller, position, sprite):
+def make_player(controller, position, spritesheet, horizontalBounds):
    return make_entity({
+      spritesheet: spritesheet,
+      controller: controller,
+      horizontalBounds: horizontalBounds,
       pos: position,
-      scale: xy(50%, 50%),
-      override_color: rgb(0.5, 0.0, 1.0),
-      sprite: sprite,
-      acc: xy(0, 0.1),
-      vel: xy(0, -5),
-      controller: controller
+      scale: xy(1, 1),
+      size: xy(16,16),
+      acc: xy(0, 0),
+      vel: xy(0, 0),
+      density: 0.5,
+      remaining_jumps: 10,
+      friction: 50%
   })
+
+def update_player(player):
+   if player.pos.x < player.horizontalBounds.x:
+      entity_move(player, xy(player.horizontalBounds.y, player.pos.y))
+   if player.pos.x > player.horizontalBounds.y:
+       entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
+   let controller = player.controller
+   if controller.x:
+      player.vel.x = controller.x * HORIZONTAL_SPEED
+   if controller.aa and player.remaining_jumps > 0:
+      player.vel.y = -5
+
+
+      
+def draw_player(player):
+   player.sprite = player.spritesheet.idle[⌊mode_frames / 10⌋ mod 2]
+   draw_entity(player)

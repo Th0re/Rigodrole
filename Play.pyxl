@@ -1,6 +1,7 @@
 Play
 ════════════════════════════════════════════════════════════════════════
 
+
 let physics = make_physics()
 
 createPlatformRow(physics)
@@ -10,18 +11,37 @@ let timer = 0.0
 for platform in entity_array:
    debug_print(platform)
 
+let players =[]
+push(players, make_player(gamepad_array[0], xy(SCREEN_SIZE.x/4, -20), player1_sprite, xy(0, SCREEN_SIZE.x/2 - 2)))
+push(players, make_player(gamepad_array[1], xy(SCREEN_SIZE.x*3/4, -20), player1_sprite, xy(SCREEN_SIZE.x/2 + 2, SCREEN_SIZE.x)))
+
+for player in players:
+   physics_add_entity(physics, player)
+
+
 frame
 ────────────────────────────────────────────────────────────────────────
 
 set_background(rgb(20%, 60%, 90%))
 
-draw_corner_rect(xy(SCREEN_SIZE.x/2 - 2, 0), xy(4, SCREEN_SIZE.y), #DDD)
-
+// Update
 timer += 1/60
 if timer >= 1.0:
    createPlatformRow(physics)
    timer = 0.0
 
+for player in players:
+   update_player(player)
+
 platformUpdate(physics)
+
+// Physics
 physics_simulate(physics)
+
+// Draws
 platformDraw()
+
+for player in players:
+   draw_player(player)
+
+draw_corner_rect(xy(SCREEN_SIZE.x/2 - 2, 0), xy(4, SCREEN_SIZE.y), #DDD)
