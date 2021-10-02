@@ -23,7 +23,7 @@
         "player1_sprite": "player1.sprite.json",
         "platform_sprite": "platform.sprite.json",
         "powerup_sprite": "powerup.sprite.json",
-        "draw_sprite": "draw.sprite.json",
+        "drawing_sprite": "drawing.sprite.json",
         "player_1_winned_sprite": "player_1_winned.sprite.json",
         "player_2_bestest_sprite": "player_2_bestest.sprite.json",
         "score_sprite": "score.sprite.json",
