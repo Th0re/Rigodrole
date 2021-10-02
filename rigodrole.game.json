@@ -23,7 +23,12 @@
         "blip_sound": "quad://sounds/blip-04.sound.json",
         "astronaut": "quad://sprites/kenney-alien-yellow-16x32.sprite.json",
         "player1_sprite": "player1.sprite.json",
-        "platform_sprite": "platform.sprite.json"
+        "platform_sprite": "platform.sprite.json",
+        "boing_nico_1": "boing_nico_1.sound.json",
+        "boing_nico_2": "boing_nico_2.sound.json",
+        "boing_nico_3": "boing_nico_3.sound.json",
+        "boing_nico_4": "boing_nico_4.sound.json",
+        "main_theme": "main_theme.sound.json"
     },
     "version": 0,
     "min_players": 1,

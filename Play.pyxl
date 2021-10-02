@@ -1,10 +1,11 @@
 Play
 ════════════════════════════════════════════════════════════════════════
 
+play_sound(main_theme, true, 200)
 
 let mainPhysics = make_physics()
 
-createPlatformRow(mainPhysics)
+createPlatformRow(true)
 
 let timer = 0.0
 let dt = 1/60
@@ -28,7 +29,7 @@ set_background(rgb(20%, 60%, 90%))
 // Update
 timer += dt
 if timer >= 1.0:
-   createPlatformRow()
+   createPlatformRow(false)
    timer = 0.0
 
 for player in players:
