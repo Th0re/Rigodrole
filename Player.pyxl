@@ -5,7 +5,6 @@ let boingSound = [
    boing_nico_2,
    boing_nico_3,
    boing_nico_4
-
 ]
 
 def make_player(controller, position, spritesheet, horizontalBounds):

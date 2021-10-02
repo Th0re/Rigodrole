@@ -1,13 +1,23 @@
 Play
 ════════════════════════════════════════════════════════════════════════
 
+let LEFT_SCREEN_START_X = 0
+let LEFT_SCREEN_END_X = 190
+
+let RIGHT_SCREEN_START_X = 194
+let RIGHT_SCREEN_END_X = 384
+
+let PLATFORM_COLUMN_COUNT = 5
+let PLATFORM_COLUMN_X = 38
+
 play_sound(main_theme, true, 200)
 
 let mainPhysics = make_physics()
 
 createPlatformRow(true)
 
-let timer = 0.0
+let platformTimer = 0.0
+let powerupTimer = 0.0
 let dt = 1/60
 
 let players =[]
@@ -23,10 +33,15 @@ frame
 
 
 // Update
-timer += dt
-if timer >= 1.0:
+platformTimer += dt
+if platformTimer >= 1.0:
    createPlatformRow(false)
-   timer = 0.0
+   platformTimer = 0.0
+
+//powerupTimer += dt
+//if powerupTimer >= 5.0:
+//   createPowerUp()
+//   powerupTimer = 0.0
 
 for player in players:
    update_player(player, entity_array)
@@ -40,9 +55,25 @@ physics_simulate(mainPhysics)
 // Draws
 set_background(rgb(20%, 60%, 90%))
 
+//updatePowerUp(players, entity_array, dt)
+
 platformDraw()
+
+//powerUpDraw()
 
 for player in players:
    draw_player(player)
 
 draw_corner_rect(xy(SCREEN_SIZE.x/2 - 2, 0), xy(4, SCREEN_SIZE.y), #DDD)
+
+//TODO
+
+//ajouter dans le main theme
+// j'aime me battre
+// le gras c'est la vie
+// merci maxence
+// faire le son du souffle
+
+// swap color for player 2
+// correction of powerUp
+// finish main menu and end

@@ -1,0 +1,11 @@
+{
+    "url": "draw.png",
+    "sprite_size": {
+        "x": 384,
+        "y": 112
+    },
+    "license": "By Th0re 2021. In the Public Domain/Licensed as CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/",
+    "gutter": 0,
+    "transpose": false,
+    "default_frames": 1
+}

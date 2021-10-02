@@ -9,6 +9,10 @@ let RIGHT_SCREEN_END_X = 384
 let PLATFORM_COLUMN_COUNT = 5
 let PLATFORM_COLUMN_X = 38
 
+let platformWidth = 24
+let platformHeight = 8
+
+// don't forget to create a second rray for right platform
 const entity_array = []
 
 def createPlatformRow(fullRow):
@@ -24,9 +28,6 @@ def createPlatformRow(fullRow):
    push(leftScreenColumnnPos, 0)
    shuffle(leftScreenColumnnPos)
 
-   let platformWidth = 24
-   let platformHeight = 8
-
    // create left platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
       if leftScreenColumnnPos[platformPosIndex] == 1 or fullRow:
@@ -38,7 +39,6 @@ def createPlatformRow(fullRow):
             sprite: platform_sprite,
             pivot: xy(0, 0),
             vel: xy(0, 1),
-            density: infinity,
             hasBeenToutch: false,
             isFalling: false,
             timer: 0,
@@ -67,7 +67,6 @@ def createPlatformRow(fullRow):
                sprite: platform_sprite,
                pivot: xy(0, 0),
                vel: xy(0, 1),
-               density: infinity,
                hasBeenToutch: false,
                isFalling: false,
                timer: 0,
@@ -91,7 +90,7 @@ def platformUpdate(players, dt):
       // check for collision and for switch between main and falling physics
       if platform.hasBeenToutch:
          platform.timer += dt
-         if platform.timer > 10:
+         if platform.timer > 1:
             if not platform.isFalling:
                platform.vel *= 1.05
       else if collidePlayer(platform, players):

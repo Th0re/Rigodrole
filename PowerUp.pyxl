@@ -1,1 +1,62 @@
 // Scripts, variables, and constants here are visible to all modes
+
+let powerupWidth = 8
+let powerupHeight = 8
+
+const powerup_array = []
+
+def createPowerUp():
+   debug_print("power up create")
+   set_random_seed(local_time().millisecond)
+   // random position between all platform column
+   let randomPos = random_integer(0, 4)
+
+   push(powerup_array, make_entity
+      ({
+         pos: xy(LEFT_SCREEN_START_X + (randomPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, -8),
+         shape: "rect",
+         size: xy(powerupWidth, powerupHeight),
+         sprite: powerup_sprite,
+         pivot: xy(0, 0),
+         vel: xy(0, 1.5),
+      }))
+
+   let randomPowerUpPos = random_integer(0, 4)
+   
+   push(powerup_array, make_entity
+      ({
+         pos: xy(RIGHT_SCREEN_START_X + (randomPowerUpPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, -8),
+         shape: "rect",
+         size: xy(powerupWidth, powerupHeight),
+         sprite: powerup_sprite,
+         pivot: xy(0, 0),
+         vel: xy(0, 1.5),
+      }))
+
+def powerUpCollideEntity(powerUp, entitys):
+   for entity in entitys:
+      if overlaps(powerUp, entity):
+         return true
+   return false
+
+def updatePowerUp(players, platforrms, dt):
+   //move platform and check for out of bound
+   for powerup in clone(powerup_array):
+      if powerup.pos.y ≥ SCREEN_SIZE.y:
+         remove_values(powerup_array, powerup)
+         continue
+
+      entity_move(powerup, powerup.pos + powerup.vel)
+
+      for player in players:
+         if powerUpCollideEntity(powerup, player):
+            debug_print("power up player")
+            remove_values(powerup_array, powerup)
+
+      for platform in platforms:
+         if powerUpCollideEntity(powerup, platform):
+         powerup.vel.y = 1.0
+
+def powerUpDraw():
+   for powerup in powerup_array:
+      draw_entity(powerup)
