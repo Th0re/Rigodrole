@@ -18,12 +18,14 @@ def make_player(controller, position, spritesheet, horizontalBounds):
       size: xy(16,16),
       acc: xy(0, 0),
       vel: xy(0, 0),
+      // density: infinity,
       density: 0.1,
-      remaining_jumps: 10,
+      remaining_jumps: 5,
       friction: 50%
   })
 
-def update_player(player):
+def update_player(player, platforms):
+   debug_print(player.pos)
    player.spin = 0
    player.torque = 0
    if player.pos.x < player.horizontalBounds.x:
@@ -31,11 +33,49 @@ def update_player(player):
    if player.pos.x > player.horizontalBounds.y:
        entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
    let controller = player.controller
-   if controller.x:
+   if controller.x:                   
       player.vel.x = controller.x * HORIZONTAL_SPEED
+   // if controller.x:
+   //    entity_move(player, xy(player.pos.x + controller.x*2, player.pos.y))
+   // if controller.y:
+   //    entity_move(player, xy(player.pos.x, player.pos.y + controller.y*2))
+   //    player.vel.y = controller.y * HORIZONTAL_SPEED
    if controller.aa and player.remaining_jumps > 0:
       playRandomBoing()
       player.vel.y = -5
+      //--player.remaining_jumps
+   
+   for platform in platforms:
+      if (abs(player.pos.x - platform.pos.x) < (player.size.x/2 + platform.size.x/2) and abs(player.pos.y - platform.pos.y) < (player.size.y/2 + platform.size.y/2)):
+         // debug_print(platform.pos)
+         // debug_print("(platform)")
+         let angle = xy_to_angle(player.pos - platform.pos)
+         if angle <= pi/4 and angle >= -pi/4:
+            player.vel.x /= 2
+            if player.vel.y > 0:
+               player.vel.y = 0
+               player.acc.y = 0
+               //if (player.pos.y - platform.pos.y) < (player.size.y/2 + platform.size.y/2):
+               //   entity_move(player, xy(player.pos.x, platform.pos.y - (/*player.size.y/2 +*/ platform.size.y/2)))
+               if (player.remaining_jumps < 2):
+                  player.remaining_jumps = 2
+         if angle >= -3pi/4 and angle <= -pi/4:
+            player.vel.x /= 2
+            if player.vel.y < 0:
+               player.vel.y = 0
+               player.acc.y = 0
+         if angle >= 3pi/4 or angle <= -3pi/4:
+            if player.vel.x > 0:
+               player.vel.x = 0
+               player.acc.x = 0
+         if angle >= pi/4 and angle <= 3pi/4:
+            if player.vel.x < 0:
+               player.vel.x = 0
+               player.acc.x = 0
+   if player.vel.x > 3: player.vel.x = 3
+   if player.vel.x < -3: player.vel.x = -3
+   if player.vel.y > 3: player.vel.y = 3
+   if player.vel.y < -3: player.vel.y = -3
 
 def playRandomBoing():
    let randomIndex = random_integer(0, size(boingSound) - 1)

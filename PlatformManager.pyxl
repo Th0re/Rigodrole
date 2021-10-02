@@ -24,20 +24,19 @@ def createPlatformRow(fullRow):
    push(leftScreenColumnnPos, 0)
    shuffle(leftScreenColumnnPos)
 
+   let platformWidth = 24
+   let platformHeight = 8
+
    // create left platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
-<<<<<<< HEAD
       if leftScreenColumnnPos[platformPosIndex] == 1 or fullRow:
-=======
-      if(leftScreenColumnnPos[platformPosIndex] == 1):
->>>>>>> bfa6ab9ac8d589f4a63eee15129f411e9f49111f
          push(entity_array, make_entity
          ({
-            pos: xy(LEFT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
+            pos: xy(LEFT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + platformWidth/2 + 7, 0),
             shape: "rect",
-            size: xy(24, 4),
+            size: xy(platformWidth, platformHeight),
             sprite: platform_sprite,
-            pivot: xy(-12, -2),
+            pivot: xy(0, 0),
             vel: xy(0, 1),
             density: infinity,
             hasBeenToutch: false,
@@ -59,18 +58,14 @@ def createPlatformRow(fullRow):
 
    // create right platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
-<<<<<<< HEAD
       if rightScreenColumnnPos[platformPosIndex] == 1 or fullRow:
-=======
-      if(rightScreenColumnnPos[platformPosIndex] == 1):
->>>>>>> bfa6ab9ac8d589f4a63eee15129f411e9f49111f
          push(entity_array, make_entity
             ({
-               pos: xy(RIGHT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
+               pos: xy(RIGHT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + platformWidth/2 + 7, 0),
                shape: "rect",
-               size: xy(24, 4),
+               size: xy(platformWidth, platformHeight),
                sprite: platform_sprite,
-               pivot: xy(-12, -2),
+               pivot: xy(0, 0),
                vel: xy(0, 1),
                density: infinity,
                hasBeenToutch: false,
@@ -96,7 +91,7 @@ def platformUpdate(players, dt):
       // check for collision and for switch between main and falling physics
       if platform.hasBeenToutch:
          platform.timer += dt
-         if platform.timer > 1:
+         if platform.timer > 10:
             if not platform.isFalling:
                platform.vel *= 1.05
       else if collidePlayer(platform, players):
@@ -106,3 +101,4 @@ def platformUpdate(players, dt):
 def platformDraw():
    for platform in entity_array:
       draw_entity(platform)
+      //draw_bounds(platform)

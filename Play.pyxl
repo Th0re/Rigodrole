@@ -29,12 +29,13 @@ if timer >= 1.0:
    timer = 0.0
 
 for player in players:
-   update_player(player)
+   update_player(player, entity_array)
 
 platformUpdate(players, dt)
 
 // Physics
 physics_simulate(mainPhysics)
+//draw_physics(mainPhysics)
 
 // Draws
 set_background(rgb(20%, 60%, 90%))
