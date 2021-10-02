@@ -22,7 +22,8 @@
         "shapes": "quad://sprites/shapes-32x32.sprite.json",
         "blip_sound": "quad://sounds/blip-04.sound.json",
         "astronaut": "quad://sprites/kenney-alien-yellow-16x32.sprite.json",
-        "player1_sprite": "player1.sprite.json"
+        "player1_sprite": "player1.sprite.json",
+        "platform_sprite": "platform.sprite.json"
     },
     "version": 0,
     "min_players": 1,

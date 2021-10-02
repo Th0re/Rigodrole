@@ -1,1 +1,5 @@
 // Scripts, variables, and constants here are visible to all modes
+
+def createPlatform(posX, posY, sizeX, sizeY):
+   let obj = make_entity({pos: xy(posX, posY), shape: "rect", size: xy(sizeX, sizeY)})
+   return obj

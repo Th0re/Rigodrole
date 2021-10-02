@@ -1,1 +1,81 @@
 // Scripts, variables, and constants here are visible to all modes
+
+let LEFT_SCREEN_START_X = 0
+let LEFT_SCREEN_END_X = 190
+
+let RIGHT_SCREEN_START_X = 194
+let RIGHT_SCREEN_END_X = 384
+
+let PLATFORM_COLUMN_COUNT = 5
+let PLATFORM_COLUMN_X = 38
+
+const entity_array = []
+
+def createPlatformRow(physics):
+   set_random_seed(local_time().millisecond)
+
+   // generate random number array for left platform creation
+   let leftScreenColumnnPos = []
+   for columnIndex < PLATFORM_COLUMN_COUNT - 2:
+      push(leftScreenColumnnPos, random_integer(0, 1))
+
+   // create at least 1 platform
+   push(leftScreenColumnnPos, 1)
+   shuffle(leftScreenColumnnPos)
+
+   // create left platform row
+   for platformPosIndex < PLATFORM_COLUMN_COUNT:
+      if(leftScreenColumnnPos[platformPosIndex] == 1):
+         push(entity_array, make_entity
+         ({
+            pos: xy(LEFT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
+            shape: "rect",
+            size: xy(24, 4),
+            sprite: platform_sprite,
+            pivot: xy(-12, -2),
+            vel: xy(0, 1),
+            drag: 0,
+            density: infinity
+         }))
+
+         physics_add_entity(physics, last_value(entity_array))
+
+   // generate random number array for right platform creation
+   let rightScreenColumnnPos = []
+   for columnIndex < PLATFORM_COLUMN_COUNT - 2:
+      push(rightScreenColumnnPos, random_integer(0, 1))
+
+   // create at least 1 platform
+   push(rightScreenColumnnPos, 1)
+   shuffle(rightScreenColumnnPos)
+
+   // create right platform row
+   for platformPosIndex < PLATFORM_COLUMN_COUNT:
+      if(rightScreenColumnnPos[platformPosIndex] == 1):
+         push(entity_array, make_entity
+            ({
+               pos: xy(RIGHT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
+               shape: "rect",
+               size: xy(24, 4),
+               sprite: platform_sprite,
+               pivot: xy(-12, -2),
+               vel: xy(0, 1),
+               drag: 0,
+               density: infinity
+            }))
+
+         physics_add_entity(physics, last_value(entity_array))
+
+
+def platformUpdate(physics):
+   for platform in clone(entity_array):
+      entity_move(platform, platform.pos + platform.vel)
+      for axis in "xy":
+         if platform.pos[axis] ≥ SCREEN_SIZE[axis]:
+            remove_values(entity_array, platform)
+            physics_remove_entity(physics, platform)
+
+
+def platformDraw():
+   for platform in entity_array:
+      draw_entity(platform)
