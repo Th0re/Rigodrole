@@ -11,7 +11,7 @@ let PLATFORM_COLUMN_X = 38
 
 const entity_array = []
 
-def createPlatformRow(physics):
+def createPlatformRow():
    set_random_seed(local_time().millisecond)
 
    // generate random number array for left platform creation
@@ -21,11 +21,12 @@ def createPlatformRow(physics):
 
    // create at least 1 platform
    push(leftScreenColumnnPos, 1)
+   push(leftScreenColumnnPos, 0)
    shuffle(leftScreenColumnnPos)
 
    // create left platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
-      if(leftScreenColumnnPos[platformPosIndex] == 1):
+      //if(leftScreenColumnnPos[platformPosIndex] == 1):
          push(entity_array, make_entity
          ({
             pos: xy(LEFT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
@@ -34,11 +35,13 @@ def createPlatformRow(physics):
             sprite: platform_sprite,
             pivot: xy(-12, -2),
             vel: xy(0, 1),
-            drag: 0,
-            density: infinity
+            density: infinity,
+            hasBeenToutch: false,
+            isFalling: false,
+            timer: 0,
          }))
 
-         physics_add_entity(physics, last_value(entity_array))
+   set_random_seed(local_time().millisecond)
 
    // generate random number array for right platform creation
    let rightScreenColumnnPos = []
@@ -47,11 +50,12 @@ def createPlatformRow(physics):
 
    // create at least 1 platform
    push(rightScreenColumnnPos, 1)
+   push(rightScreenColumnnPos, 0)
    shuffle(rightScreenColumnnPos)
 
    // create right platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
-      if(rightScreenColumnnPos[platformPosIndex] == 1):
+      //if(rightScreenColumnnPos[platformPosIndex] == 1):
          push(entity_array, make_entity
             ({
                pos: xy(RIGHT_SCREEN_START_X + (platformPosIndex * PLATFORM_COLUMN_X) + 7, 0),
@@ -60,21 +64,36 @@ def createPlatformRow(physics):
                sprite: platform_sprite,
                pivot: xy(-12, -2),
                vel: xy(0, 1),
-               drag: 0,
-               density: infinity
+               density: infinity,
+               hasBeenToutch: false,
+               isFalling: false,
+               timer: 0,
             }))
 
-         physics_add_entity(physics, last_value(entity_array))
+def collidePlayer(platform, players):
+   for player in players:
+      if overlaps(platform, player):
+         return true
+   return false
 
-
-def platformUpdate(physics):
+def platformUpdate(players, dt):
+   //move platform and check for out of bound
    for platform in clone(entity_array):
-      entity_move(platform, platform.pos + platform.vel)
-      for axis in "xy":
-         if platform.pos[axis] ≥ SCREEN_SIZE[axis]:
-            remove_values(entity_array, platform)
-            physics_remove_entity(physics, platform)
+      if platform.pos.y ≥ SCREEN_SIZE.y:
+         remove_values(entity_array, platform)
+         continue
 
+      entity_move(platform, platform.pos + platform.vel)
+
+      // check for collision and for switch between main and falling physics
+      if platform.hasBeenToutch:
+         platform.timer += dt
+         if platform.timer > 1:
+            if not platform.isFalling:
+               platform.vel *= 1.05
+      else if collidePlayer(platform, players):
+         platform.hasBeenToutch = true
+         platform.timer += dt
 
 def platformDraw():
    for platform in entity_array:
