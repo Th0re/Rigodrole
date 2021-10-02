@@ -1,5 +1,6 @@
 Play
 ════════════════════════════════════════════════════════════════════════
+// Put local state for the mode here.  Declare variables with let, constants with const, and functions with def.
 
 let LEFT_SCREEN_START_X = 0
 let LEFT_SCREEN_END_X = 190
@@ -13,14 +14,28 @@ let PLATFORM_COLUMN_X = 38
 play_sound(main_theme, true, 200)
 
 let mainPhysics = make_physics()
+let timer
+const dt = 1/60
+let platformTimer = 0.0
+let powerupTimer = 0.0
+
+let players =[]
+
+let audioMainTheme
+let gameOver
+
+enter
+────────────────────────────────────────────────────────────────────────
+// This event runs when the mode is entered via set_mode() or push_mode().
+audioMainTheme = play_sound(main_theme, true, 200)
+gameOver = false
 
 createPlatformRow(true)
 
-let platformTimer = 0.0
-let powerupTimer = 0.0
-let dt = 1/60
+platformTimer = 0.0
+powerupTimer = 0.0
+timer = 0.0
 
-let players =[]
 push(players, make_player(gamepad_array[0], xy(SCREEN_SIZE.x/4, -20), player1_sprite, xy(0, SCREEN_SIZE.x/2 - 2)))
 push(players, make_player(gamepad_array[1], xy(SCREEN_SIZE.x*3/4, -20), player1_sprite, xy(SCREEN_SIZE.x/2 + 2, SCREEN_SIZE.x)))
 
@@ -30,7 +45,11 @@ for player in players:
 
 frame
 ────────────────────────────────────────────────────────────────────────
+// This event runs 60 times per second. Game logic, simulation, user input, and drawing all go here.
 
+if gameOver:
+   pop_mode()
+    
 
 // Update
 platformTimer += dt
@@ -62,8 +81,26 @@ platformDraw()
 
 for player in players:
    draw_player(player)
+   if player.pos.y > SCREEN_SIZE.y and player.score == 0:
+      player.score = ⌊mode_frames / 60⌋
 
 draw_corner_rect(xy(SCREEN_SIZE.x/2 - 2, 0), xy(4, SCREEN_SIZE.y), #DDD)
+
+if players[0].score > 0 and players[1].score > 0:
+   gameOver = true
+   push_mode(GameOver, players[0].score, players[1].score) because "GameOver"
+
+
+leave
+────────────────────────────────────────────────────────────────────────
+// This event runs just before leaving for another mode by set_mode() or pop_mode().
+stop_audio(audioMainTheme)
+
+for player in players:
+   physics_remove_entity(mainPhysics, player)
+
+remove_all(players)
+remove_all(entity_array)
 
 //TODO
 

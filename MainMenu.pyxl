@@ -12,6 +12,9 @@ frame
 ────────────────────────────────────────────────────────────────────────
 // This event runs 60 times per second. Game logic, simulation, user input, and drawing all go here.
 
+for gamepad in gamepad_array:
+   if any_button_press(gamepad):
+      push_mode(Play)
 
 leave
 ────────────────────────────────────────────────────────────────────────

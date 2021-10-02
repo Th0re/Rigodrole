@@ -1,17 +1,24 @@
 GameOver
 ════════════════════════════════════════════════════════════════════════
 // Put local state for the mode here.  Declare variables with let, constants with const, and functions with def.
+let scoreP1 = 0
+let scoreP2 = 0
 
-
-enter
+enter(finalScoreP1, finalScoreP2)
 ────────────────────────────────────────────────────────────────────────
 // This event runs when the mode is entered via set_mode() or push_mode().
+scoreP1 = finalScoreP1
+scoreP2 = finalScoreP2
 
 
 frame
 ────────────────────────────────────────────────────────────────────────
 // This event runs 60 times per second. Game logic, simulation, user input, and drawing all go here.
 
+
+for gamepad in gamepad_array:
+   if any_button_press(gamepad):
+      pop_mode()
 
 leave
 ────────────────────────────────────────────────────────────────────────

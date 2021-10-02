@@ -35,7 +35,8 @@ def make_player(controller, position, spritesheet, horizontalBounds):
       right: make_entity({
          relativePos: xy(12,4),
          size: xy(4, 8)
-      })
+      }),
+      score: 0
   })
 
 def update_player(player, platforms):

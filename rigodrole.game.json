@@ -15,7 +15,7 @@
         "MainMenu",
         "GameOver"
     ],
-    "start_mode": "Play",
+    "start_mode": "MainMenu",
     "docs": [],
     "assets": {
         "font": "quad://fonts/deja-8.font.json",
