@@ -1,0 +1,16 @@
+{
+    "constants": {
+        "HORIZONTAL_SPEED": {
+            "type": "number",
+            "value": 0,
+            "min": 0,
+            "max": {
+                "type": "number",
+                "value": "+infinity"
+            },
+            "format": "",
+            "quantum": 0,
+            "enabled": false
+        }
+    }
+}
