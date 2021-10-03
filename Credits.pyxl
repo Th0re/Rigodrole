@@ -21,7 +21,7 @@ draw_sprite(credits_sprite, xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y/2))
 if (safeTime <= 0):
    for gamepad in gamepad_array:
       if any_button_press(gamepad):
-         play_sound(poi)
+         play_sound(poi, false, 10)
          pop_mode()
 safeTime -= DT
 

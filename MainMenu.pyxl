@@ -16,16 +16,16 @@ for gamepad in gamepad_array:
    if gamepad.yy:
       if gamepad.yy > 0:
          selection = loop(selection+1, 2)
-         play_sound(poi)
+         play_sound(poi, false, 10)
       else:
          selection = loop(selection-1, 2)
-         play_sound(poi)
+         play_sound(poi, false, 10)
    else if gamepad.aa:
       if (selection == 0):
-         play_sound(poi)
+         play_sound(poi, false, 10)
          push_mode(Play)
       if (selection == 1):
-         play_sound(poi)
+         play_sound(poi, false, 10)
          push_mode(Credits)
 
 draw_sprite(main_menu_sprite, xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y/2))

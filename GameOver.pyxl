@@ -36,7 +36,7 @@ draw_text(superFont_15, format_number(scoreP2, "000000"), xy(SCREEN_SIZE.x*3/4, 
 if (safeTime <= 0):
    for gamepad in gamepad_array:
       if any_button_press(gamepad):
-         play_sound(poi)
+         play_sound(poi, false, 10)
          pop_mode()
 safeTime -= DT
 
