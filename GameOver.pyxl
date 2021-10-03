@@ -4,21 +4,38 @@ GameOver
 let scoreP1 = 0
 let scoreP2 = 0
 
-enter(finalScoreP1, finalScoreP2)
+let safeTime = 3
+
+enter(inputScoreP1, inputScoreP2)
 ────────────────────────────────────────────────────────────────────────
 // This event runs when the mode is entered via set_mode() or push_mode().
-scoreP1 = finalScoreP1
-scoreP2 = finalScoreP2
+scoreP1 = inputScoreP1
+scoreP2 = inputScoreP2
 
+safeTime = 2
 
 frame
 ────────────────────────────────────────────────────────────────────────
 // This event runs 60 times per second. Game logic, simulation, user input, and drawing all go here.
+let upperPos = xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y/4)
+if abs(scoreP1 - scoreP2) < 1:
+   draw_sprite(drawing_sprite, upperPos)
+else if scoreP1 > scoreP2:
+   draw_sprite(player_1_winned_sprite, upperPos)
+else:
+   draw_sprite(player_2_bestest_sprite, upperPos)
 
+let downPos = xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y*3/4)
+draw_sprite(score_sprite, downPos)
 
-for gamepad in gamepad_array:
-   if any_button_press(gamepad):
-      pop_mode()
+draw_text(font, format_number(scoreP1, "000000"), xy(SCREEN_SIZE.x/4, SCREEN_SIZE.y*7/8), TEXT_COLOR)
+draw_text(font, format_number(scoreP2, "000000"), xy(SCREEN_SIZE.x*3/4, SCREEN_SIZE.y*7/8), TEXT_COLOR)
+
+if (safeTime <= 0):
+   for gamepad in gamepad_array:
+      if any_button_press(gamepad):
+         pop_mode()
+safeTime -= DT
 
 leave
 ────────────────────────────────────────────────────────────────────────
