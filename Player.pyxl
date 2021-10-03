@@ -7,6 +7,17 @@ let boingSounds = [
    boing_nico_4
 ]
 
+let souffleSounds = [
+   souffle_nico_1,
+   souffle_nico_2,
+   souffle_nico_3,
+   souffle_nico_4,
+   souffle_steph_1,
+   souffle_steph_2,
+   souffle_steph_3,
+   souffle_steph_4
+]
+
 def make_player(controller, position, spritesheet, horizontalBounds):
    return make_entity({
       spritesheet: spritesheet,
@@ -49,6 +60,8 @@ def update_player(player, platforms):
    let controller = player.controller
    if controller.x:                   
       player.vel.x = controller.x * HORIZONTAL_SPEED
+   if controller.xx:
+      playRandomSouffle()
    if controller.aa and player.remaining_jumps > 0:
       playRandomBoing()
       player.vel.y = -6.5
@@ -86,6 +99,10 @@ def update_player(player, platforms):
 def playRandomBoing():
    let randomIndex = random_integer(0, size(boingSounds) - 1)
    play_sound(boingSounds[randomIndex], false, 20)
+
+def playRandomSouffle():
+   let randomIndex = random_integer(0, size(souffleSounds) - 1)
+   play_sound(souffleSounds[randomIndex], false, 20)
       
 def draw_player(player):
    if player.controller.x != 0:
