@@ -45,7 +45,8 @@
         "main_menu_sprite": "main_menu.sprite.json",
         "credits_sprite": "credits.sprite.json",
         "base_vps": "base_vps.sound.json",
-        "superFont_15": "superFont-15.font.json"
+        "superFont_15": "superFont-15.font.json",
+        "background_sprite": "background.sprite.json"
     },
     "version": 0,
     "min_players": 1,
