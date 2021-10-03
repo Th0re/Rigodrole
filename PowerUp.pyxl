@@ -14,7 +14,7 @@ def createPowerUp():
 
    push(powerup_array, make_entity
       ({
-         pos: xy(LEFT_SCREEN_START_X + (randomPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, 0),
+         pos: xy(LEFT_SCREEN_START_X + (randomPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, -10),
          shape: "rect",
          size: xy(powerupWidth, powerupHeight),
          sprite: powerup_sprite,
@@ -26,11 +26,11 @@ def createPowerUp():
 
    let randomPowerUpPos = random_integer(0, 4)
 
-   randomPowerUpIndex = random_integer(0, 0)
+   randomPowerUpIndex = random_integer(0, 1)
    
    push(powerup_array, make_entity
       ({
-         pos: xy(RIGHT_SCREEN_START_X + (randomPowerUpPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, 0),
+         pos: xy(RIGHT_SCREEN_START_X + (randomPowerUpPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, -10),
          shape: "rect",
          size: xy(powerupWidth, powerupHeight),
          sprite: powerup_sprite,
@@ -74,16 +74,17 @@ def reverseInput(powerUpPlayer):
 
 def shortPlatform(playerIndex):
 
-def noLooping(playerIndex):
+def noLooping(powerUpPlayer):
+   powerUpPlayer.noLoopingTimer += 10
 
 def noCollisionPlatform(playerIndex):
 
 def fasterFallingPlatform(playerIndex):
 
 let powerUpMethod = [
-   reverseInput
+   reverseInput,
    //shortPlatform,
-   //noLooping,
+   noLooping
    //noCollisionPlatform,
    //fasterFallingPlatform
 ]

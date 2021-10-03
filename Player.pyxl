@@ -48,18 +48,29 @@ def make_player(controller, position, spritesheet, horizontalBounds, playerIndex
          size: xy(4, 8)
       }),
       score: 0,
-      inversionTimer: 0
+      inversionTimer: 0,
+      noLoopingTimer: 0
   })
 
 def update_player(player, platforms):
    if player.inversionTimer > 0:
       player.inversionTimer -= DT
+   if player.noLoopingTimer > 0:
+      player.noLoopingTimer -= DT
    player.spin = 0
    player.torque = 0
    if player.pos.x < player.horizontalBounds.x:
-      entity_move(player, xy(player.horizontalBounds.y-1, player.pos.y))
+      if player.noLoopingTimer <= 0:
+         entity_move(player, xy(player.horizontalBounds.y-1, player.pos.y))
+      else:
+         entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
+
    if player.pos.x > player.horizontalBounds.y:
-       entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
+      if player.noLoopingTimer <= 0:
+         entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
+      else:
+         entity_move(player, xy(player.horizontalBounds.y-1, player.pos.y))
+
    let controller = player.controller
    if controller.x:
       if player.inversionTimer <= 0:                   
@@ -120,3 +131,8 @@ def draw_player(player):
    else:
       player.sprite = player.spritesheet.idle[⌊mode_frames / 10⌋ mod 2]
    draw_entity(player)
+   if (player.noLoopingTimer > 0):
+      draw_line(xy(player.horizontalBounds.x, 0), xy(player.horizontalBounds.x, SCREEN_SIZE.y), rgb(1,0,0))
+      draw_line(xy(player.horizontalBounds.y-1, 0), xy(player.horizontalBounds.y-1, SCREEN_SIZE.y), rgb(1,0,0))
+   if (player.inversionTimer > 0):
+      draw_text(superFont_15, format_number(player.inversionTimer, "0"), player.pos, rgb(1,1,1))
