@@ -67,7 +67,8 @@ platformUpdate(players, dt)
 physics_simulate(mainPhysics)
 
 // Draws
-set_background(rgb(20%, 60%, 90%))
+//set_background(rgb(20%, 60%, 90%))
+draw_sprite(background_sprite[⌊mode_frames / 10⌋ mod 7 + 1][0], xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y/2))
 
 updatePowerUp(players, entity_array, dt)
 
@@ -100,8 +101,4 @@ remove_all(entity_array)
 
 //TODO
 
-// faire le son du souffle
-// swap color for player 2
-// correction of powerUp
-// finish main menu and end
 // faire background 
