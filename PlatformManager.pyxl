@@ -40,7 +40,6 @@ def createPlatformRow(fullRow):
             pivot: xy(0, 0),
             vel: xy(0, 0.7),
             hasBeenToutch: false,
-            isFalling: false,
             timer: 0,
          }))
 
@@ -68,7 +67,6 @@ def createPlatformRow(fullRow):
                pivot: xy(0, 0),
                vel: xy(0, 0.7),
                hasBeenToutch: false,
-               isFalling: false,
                timer: 0,
             }))
 
@@ -91,10 +89,10 @@ def platformUpdate(players, dt):
       if platform.hasBeenToutch:
          platform.timer += dt
          if platform.timer > 1:
-            if not platform.isFalling:
-               platform.vel *= 1.05
+            platform.vel *= 1.05
       else if collidePlayer(platform, players):
          platform.hasBeenToutch = true
+         platform.sprite = platform_reduced_sprite
          platform.timer += dt
 
 def platformDraw():
