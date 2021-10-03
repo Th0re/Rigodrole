@@ -113,6 +113,19 @@
                     "value": "100%"
                 }
             }
+        },
+        "DEFAULT_PLATFORM_VELOCITY": {
+            "type": "xy",
+            "value": {
+                "x": {
+                    "type": "number",
+                    "value": "0"
+                },
+                "y": {
+                    "type": "number",
+                    "value": "0.7"
+                }
+            }
         }
     },
     "screenshot_tag": "Rigodrole",

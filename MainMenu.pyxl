@@ -6,7 +6,7 @@ let selection = 0
 enter
 ────────────────────────────────────────────────────────────────────────
 // This event runs when the mode is entered via set_mode() or push_mode().
-
+set_random_seed(local_time().millisecond)
 
 frame
 ────────────────────────────────────────────────────────────────────────

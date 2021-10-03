@@ -29,7 +29,7 @@ def make_player(controller, position, spritesheet, horizontalBounds, playerIndex
       acc: xy(0, 0),
       vel: xy(0, 0),
       density: 0.1,
-      remaining_jumps: 5,
+      remaining_jumps: 2,
       friction: 50%,
       top: make_entity({
          relativePos: xy(0,0),
@@ -77,6 +77,9 @@ def update_player(player, platforms):
          player.vel.x = controller.x * HORIZONTAL_SPEED
       else:
          player.vel.x = - controller.x * HORIZONTAL_SPEED
+   else:
+         player.vel.x = 0
+         player.acc.x = 0
    if controller.xx:
       playRandomSouffle()
    if controller.aa and player.remaining_jumps > 0:

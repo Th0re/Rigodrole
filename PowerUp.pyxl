@@ -6,7 +6,6 @@ let powerupHeight = 8
 const powerup_array = []
 
 def createPowerUp():
-   set_random_seed(local_time().millisecond)
    // random position between all platform column
    let randomPos = random_integer(0, 4)
 
@@ -85,11 +84,25 @@ def noLooping(powerUpPlayer, players):
 def noCollisionPlatform(powerUpPlayer, players):
 
 def fasterFallingPlatform(powerUpPlayer, players):
+   let playerIndex = find(players, powerUpPlayer)
+   if playerIndex == 0:
+      if fasterFallingLeftPlatformTimer <= 0:
+         for platform in entity_array:
+            if platform.isLeft:
+               platform.vel = platform.userVel*1.5
+         
+      fasterFallingLeftPlatformTimer += 5
+   else:
+      if fasterFallingRightPlatformTimer <= 0:
+         for platform in entity_array:
+            if not platform.isLeft:
+               platform.vel = platform.userVel*1.5
+      fasterFallingRightPlatformTimer += 5
 
 let powerUpMethod = [
    reverseInput,
    shortPlatform,
-   noLooping
+   noLooping,
    //noCollisionPlatform,
-   //fasterFallingPlatform
+   fasterFallingPlatform
 ]

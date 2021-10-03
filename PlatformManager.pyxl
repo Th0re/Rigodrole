@@ -14,13 +14,14 @@ let platformHeight = 8
 
 let reducedLeftPlatformTimer = 0
 let reducedRightPlatformTimer = 0
+let fasterFallingLeftPlatformTimer = 0
+let fasterFallingRightPlatformTimer = 0
+
 
 // don't forget to create a second rray for right platform
 const entity_array = []
 
 def createPlatformRow(fullRow):
-   set_random_seed(local_time().millisecond)
-
    // generate random number array for left platform creation
    let leftScreenColumnnPos = []
    for columnIndex < PLATFORM_COLUMN_COUNT - 2:
@@ -30,6 +31,7 @@ def createPlatformRow(fullRow):
    push(leftScreenColumnnPos, 1)
    push(leftScreenColumnnPos, 0)
    shuffle(leftScreenColumnnPos)
+   debug_print(reducedLeftPlatformTimer)
 
    // create left platform row
    for platformPosIndex < PLATFORM_COLUMN_COUNT:
@@ -41,13 +43,13 @@ def createPlatformRow(fullRow):
             size: xy(platformWidth, platformHeight),
             sprite: platform_sprite,
             pivot: xy(0, 0),
-            vel: xy(0, 0.7),
+            vel: if fasterFallingLeftPlatformTimer > 0 then clone(DEFAULT_PLATFORM_VELOCITY)*1.5 else clone(DEFAULT_PLATFORM_VELOCITY),
+            userVel: clone(DEFAULT_PLATFORM_VELOCITY),
             hasBeenToutch: false,
             timer: 0,
-            scale: xy(if not reducedLeftPlatformTimer then 1 else 0.6, 1)
+            scale: xy(if not (reducedLeftPlatformTimer > 0) then 1 else 0.6, 1),
+            isLeft: true
          }))
-
-   set_random_seed(local_time().millisecond)
 
    // generate random number array for right platform creation
    let rightScreenColumnnPos = []
@@ -69,10 +71,12 @@ def createPlatformRow(fullRow):
                size: xy(platformWidth, platformHeight),
                sprite: platform_sprite,
                pivot: xy(0, 0),
-               vel: xy(0, 0.7),
+               vel: if fasterFallingRightPlatformTimer > 0 then clone(DEFAULT_PLATFORM_VELOCITY)*1.5 else clone(DEFAULT_PLATFORM_VELOCITY),
+               userVel: clone(DEFAULT_PLATFORM_VELOCITY),
                hasBeenToutch: false,
                timer: 0,
-               scale: xy(if not reducedRightPlatformTimer then 1 else 0.6, 1)
+               scale: xy(if not (reducedRightPlatformTimer > 0) then 1 else 0.6, 1),
+               isLeft: false
             }))
 
 def collidePlayer(platform, players):
@@ -82,11 +86,24 @@ def collidePlayer(platform, players):
    return false
 
 def platformUpdate(players, dt):
-
    if reducedLeftPlatformTimer > 0:
       reducedLeftPlatformTimer -= DT
    if reducedRightPlatformTimer > 0:
       reducedRightPlatformTimer -= DT
+   
+   if fasterFallingLeftPlatformTimer > 0:
+      fasterFallingLeftPlatformTimer -= DT
+      if fasterFallingLeftPlatformTimer <= 0:
+         for platform in entity_array:
+            if platform.isLeft:
+               platform.vel = platform.userVel
+      
+   if fasterFallingRightPlatformTimer > 0:
+      fasterFallingRightPlatformTimer -= DT
+      if fasterFallingRightPlatformTimer <= 0:
+         for platform in entity_array:
+            if not platform.isLeft:
+               platform.vel = platform.userVel
 
    //move platform and check for out of bound
    for platform in clone(entity_array):
@@ -96,11 +113,12 @@ def platformUpdate(players, dt):
 
       entity_move(platform, platform.pos + platform.vel)
 
-      // check for collision and for switch between main and falling physics
+      // check for collision
       if platform.hasBeenToutch:
          platform.timer += dt
          if platform.timer > 1:
             platform.vel *= 1.05
+            platform.userVel *= 1.05
       else if collidePlayer(platform, players):
          platform.hasBeenToutch = true
          platform.sprite = platform_reduced_sprite

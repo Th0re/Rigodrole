@@ -102,6 +102,8 @@ remove_all(powerup_array)
 
 reducedLeftPlatformTimer = 0
 reducedRightPlatformTimer = 0
+fasterFallingLeftPlatformTimer = 0
+fasterFallingRightPlatformTimer = 0
 
 //TODO
 
