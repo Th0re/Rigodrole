@@ -57,10 +57,10 @@ if platformTimer >= 1.0:
    createPlatformRow(false)
    platformTimer = 0.0
 
-//powerupTimer += dt
-//if powerupTimer >= 5.0:
-//   createPowerUp()
-//   powerupTimer = 0.0
+powerupTimer += dt
+if powerupTimer >= 5.0:
+   createPowerUp()
+   powerupTimer = 0.0
 
 for player in players:
    update_player(player, entity_array)
@@ -73,11 +73,11 @@ physics_simulate(mainPhysics)
 // Draws
 set_background(rgb(20%, 60%, 90%))
 
-//updatePowerUp(players, entity_array, dt)
+updatePowerUp(players, entity_array, dt)
 
 platformDraw()
 
-//powerUpDraw()
+powerUpDraw()
 
 for player in players:
    draw_player(player)
@@ -104,12 +104,7 @@ remove_all(entity_array)
 
 //TODO
 
-//ajouter dans le main theme
-// j'aime me battre
-// le gras c'est la vie
-// merci maxence
 // faire le son du souffle
-
 // swap color for player 2
 // correction of powerUp
 // finish main menu and end
