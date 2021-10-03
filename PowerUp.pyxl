@@ -10,7 +10,7 @@ def createPowerUp():
    // random position between all platform column
    let randomPos = random_integer(0, 4)
 
-   let randomPowerUpIndex = random_integer(0, 0)
+   let randomPowerUpIndex = random_integer(0, size(powerUpMethod)-1)
 
    push(powerup_array, make_entity
       ({
@@ -26,7 +26,7 @@ def createPowerUp():
 
    let randomPowerUpPos = random_integer(0, 4)
 
-   randomPowerUpIndex = random_integer(0, 1)
+   randomPowerUpIndex = random_integer(0, size(powerUpMethod)-1)
    
    push(powerup_array, make_entity
       ({
@@ -62,28 +62,33 @@ def updatePowerUp(players, platforms, dt):
       let powerUpPlayer = powerUpCollideEntity(powerup, players)
       if powerUpPlayer:
          let playerIndex = find(players, powerUpPlayer)
-         powerUpMethod[powerup.powerUpIndex](players[loop(playerIndex + 1, 2)])
+         powerUpMethod[powerup.powerUpIndex](players[loop(playerIndex + 1, 2)], players)
          remove_values(powerup_array, powerup)
 
 def powerUpDraw():
    for powerup in powerup_array:
       draw_entity(powerup)
 
-def reverseInput(powerUpPlayer):
+def reverseInput(powerUpPlayer, players):
    powerUpPlayer.inversionTimer += 3
 
-def shortPlatform(playerIndex):
+def shortPlatform(powerUpPlayer, players):
+   let playerIndex = find(players, powerUpPlayer)
+   if playerIndex == 0:
+      reducedLeftPlatformTimer += 10
+   else:
+      reducedRightPlatformTimer += 10
 
-def noLooping(powerUpPlayer):
+def noLooping(powerUpPlayer, players):
    powerUpPlayer.noLoopingTimer += 10
 
-def noCollisionPlatform(playerIndex):
+def noCollisionPlatform(powerUpPlayer, players):
 
-def fasterFallingPlatform(playerIndex):
+def fasterFallingPlatform(powerUpPlayer, players):
 
 let powerUpMethod = [
    reverseInput,
-   //shortPlatform,
+   shortPlatform,
    noLooping
    //noCollisionPlatform,
    //fasterFallingPlatform

@@ -85,13 +85,13 @@ draw_corner_rect(xy(SCREEN_SIZE.x/2 - 2, 0), xy(4, SCREEN_SIZE.y), #DDD)
 
 if players[0].score > 0 and players[1].score > 0:
    gameOver = true
+   stop_audio(audioMainTheme)
    push_mode(GameOver, players[0].score, players[1].score) because "GameOver"
 
 
 leave
 ────────────────────────────────────────────────────────────────────────
 // This event runs just before leaving for another mode by set_mode() or pop_mode().
-stop_audio(audioMainTheme)
 
 for player in players:
    physics_remove_entity(mainPhysics, player)
@@ -99,6 +99,9 @@ for player in players:
 remove_all(players)
 remove_all(entity_array)
 remove_all(powerup_array)
+
+reducedLeftPlatformTimer = 0
+reducedRightPlatformTimer = 0
 
 //TODO
 

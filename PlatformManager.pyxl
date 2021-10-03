@@ -12,6 +12,9 @@ let PLATFORM_COLUMN_X = 38
 let platformWidth = 24
 let platformHeight = 8
 
+let reducedLeftPlatformTimer = 0
+let reducedRightPlatformTimer = 0
+
 // don't forget to create a second rray for right platform
 const entity_array = []
 
@@ -41,6 +44,7 @@ def createPlatformRow(fullRow):
             vel: xy(0, 0.7),
             hasBeenToutch: false,
             timer: 0,
+            scale: xy(if not reducedLeftPlatformTimer then 1 else 0.6, 1)
          }))
 
    set_random_seed(local_time().millisecond)
@@ -68,6 +72,7 @@ def createPlatformRow(fullRow):
                vel: xy(0, 0.7),
                hasBeenToutch: false,
                timer: 0,
+               scale: xy(if not reducedRightPlatformTimer then 1 else 0.6, 1)
             }))
 
 def collidePlayer(platform, players):
@@ -77,6 +82,12 @@ def collidePlayer(platform, players):
    return false
 
 def platformUpdate(players, dt):
+
+   if reducedLeftPlatformTimer > 0:
+      reducedLeftPlatformTimer -= DT
+   if reducedRightPlatformTimer > 0:
+      reducedRightPlatformTimer -= DT
+
    //move platform and check for out of bound
    for platform in clone(entity_array):
       if platform.pos.y ≥ SCREEN_SIZE.y:
