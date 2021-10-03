@@ -47,7 +47,9 @@
         "base_vps": "base_vps.sound.json",
         "superFont_15": "superFont-15.font.json",
         "background_sprite": "background.sprite.json",
-        "platform_reduced_sprite": "platform_reduced.sprite.json"
+        "platform_reduced_sprite": "platform_reduced.sprite.json",
+        "coolcool_sound": "coolcool.sound.json",
+        "woaw_sound": "woaw.sound.json"
     },
     "version": 0,
     "min_players": 1,

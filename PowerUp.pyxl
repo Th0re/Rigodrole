@@ -61,6 +61,10 @@ def updatePowerUp(players, platforms, dt):
       let powerUpPlayer = powerUpCollideEntity(powerup, players)
       if powerUpPlayer:
          let playerIndex = find(players, powerUpPlayer)
+         if playerIndex == 0:
+            play_sound(woaw_sound, false, 40)
+         else:
+            play_sound(coolcool_sound, false, 30)
          powerUpMethod[powerup.powerUpIndex](players[loop(playerIndex + 1, 2)], players)
          remove_values(powerup_array, powerup)
 
