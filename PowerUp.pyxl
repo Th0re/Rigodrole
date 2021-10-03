@@ -10,35 +10,41 @@ def createPowerUp():
    // random position between all platform column
    let randomPos = random_integer(0, 4)
 
+   let randomPowerUpIndex = random_integer(0, 0)
+
    push(powerup_array, make_entity
       ({
-         pos: xy(LEFT_SCREEN_START_X + (randomPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, 20),
+         pos: xy(LEFT_SCREEN_START_X + (randomPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, 0),
          shape: "rect",
          size: xy(powerupWidth, powerupHeight),
          sprite: powerup_sprite,
          pivot: xy(0, 0),
          acc: xy(0, 0),
          vel: xy(0, 1.5),
+         powerUpIndex: randomPowerUpIndex
       }))
 
    let randomPowerUpPos = random_integer(0, 4)
+
+   randomPowerUpIndex = random_integer(0, 0)
    
    push(powerup_array, make_entity
       ({
-         pos: xy(RIGHT_SCREEN_START_X + (randomPowerUpPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, 20),
+         pos: xy(RIGHT_SCREEN_START_X + (randomPowerUpPos * PLATFORM_COLUMN_X) + powerupWidth/2 + 15, 0),
          shape: "rect",
          size: xy(powerupWidth, powerupHeight),
          sprite: powerup_sprite,
          pivot: xy(0, 0),
          acc: xy(0, 0),
          vel: xy(0, 1.5),
+         powerUpIndex: randomPowerUpIndex
       }))
 
 def powerUpCollideEntity(powerup, entitys):
    for entity in entitys:
       if overlaps(powerup, entity):
-         return true
-   return false
+         return entity
+   return nil
 
 def updatePowerUp(players, platforms, dt):
    //move platform and check for out of bound
@@ -49,12 +55,35 @@ def updatePowerUp(players, platforms, dt):
  
       entity_move(powerup, powerup.pos + powerup.vel)
 
-      if powerUpCollideEntity(powerup, platforms):
-         powerup.vel.y = 1.0
+      let platform = powerUpCollideEntity(powerup, platforms)
+      if platform:
+         powerup.vel.y = platform.vel.y
 
-      if powerUpCollideEntity(powerup, players):
+      let powerUpPlayer = powerUpCollideEntity(powerup, players)
+      if powerUpPlayer:
+         let playerIndex = find(players, powerUpPlayer)
+         powerUpMethod[powerup.powerUpIndex](players[loop(playerIndex + 1, 2)])
          remove_values(powerup_array, powerup)
 
 def powerUpDraw():
    for powerup in powerup_array:
       draw_entity(powerup)
+
+def reverseInput(powerUpPlayer):
+   powerUpPlayer.inversionTimer += 3
+
+def shortPlatform(playerIndex):
+
+def noLooping(playerIndex):
+
+def noCollisionPlatform(playerIndex):
+
+def fasterFallingPlatform(playerIndex):
+
+let powerUpMethod = [
+   reverseInput
+   //shortPlatform,
+   //noLooping,
+   //noCollisionPlatform,
+   //fasterFallingPlatform
+]

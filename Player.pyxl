@@ -18,7 +18,7 @@ let souffleSounds = [
    souffle_steph_4
 ]
 
-def make_player(controller, position, spritesheet, horizontalBounds):
+def make_player(controller, position, spritesheet, horizontalBounds, playerIndex):
    return make_entity({
       spritesheet: spritesheet,
       controller: controller,
@@ -47,10 +47,13 @@ def make_player(controller, position, spritesheet, horizontalBounds):
          relativePos: xy(12,4),
          size: xy(4, 8)
       }),
-      score: 0
+      score: 0,
+      inversionTimer: 0
   })
 
 def update_player(player, platforms):
+   if player.inversionTimer > 0:
+      player.inversionTimer -= DT
    player.spin = 0
    player.torque = 0
    if player.pos.x < player.horizontalBounds.x:
@@ -58,8 +61,11 @@ def update_player(player, platforms):
    if player.pos.x > player.horizontalBounds.y:
        entity_move(player, xy(player.horizontalBounds.x, player.pos.y))
    let controller = player.controller
-   if controller.x:                   
-      player.vel.x = controller.x * HORIZONTAL_SPEED
+   if controller.x:
+      if player.inversionTimer <= 0:                   
+         player.vel.x = controller.x * HORIZONTAL_SPEED
+      else:
+         player.vel.x = - controller.x * HORIZONTAL_SPEED
    if controller.xx:
       playRandomSouffle()
    if controller.aa and player.remaining_jumps > 0:

@@ -28,8 +28,6 @@ enter
 audioMainTheme = play_sound(main_theme, true, 200)
 gameOver = false
 
-createPlatformRow(true)
-
 platformTimer = 0.0
 powerupTimer = 0.0
 timer = 0.0
@@ -37,9 +35,10 @@ timer = 0.0
 push(players, make_player(gamepad_array[0], xy(SCREEN_SIZE.x/4, -20), player1_sprite, xy(0, SCREEN_SIZE.x/2 - 2)))
 push(players, make_player(gamepad_array[1], xy(SCREEN_SIZE.x*3/4, -20), player2_sprite, xy(SCREEN_SIZE.x/2 + 2, SCREEN_SIZE.x)))
 
+createPlatformRow(true)
+
 for player in players:
    physics_add_entity(mainPhysics, player)
-
 
 frame
 ────────────────────────────────────────────────────────────────────────
@@ -48,15 +47,14 @@ frame
 if gameOver:
    pop_mode()
     
-
 // Update
 platformTimer += dt
-if platformTimer >= 1.0:
+if platformTimer >= 1.3:
    createPlatformRow(false)
    platformTimer = 0.0
 
 powerupTimer += dt
-if powerupTimer >= 5.0:
+if powerupTimer = dt:
    createPowerUp()
    powerupTimer = 0.0
 
