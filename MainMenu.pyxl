@@ -1,7 +1,7 @@
 MainMenu
 ════════════════════════════════════════════════════════════════════════
 // Put local state for the mode here.  Declare variables with let, constants with const, and functions with def.
-
+let selection = 0
 
 enter
 ────────────────────────────────────────────────────────────────────────
@@ -13,8 +13,23 @@ frame
 // This event runs 60 times per second. Game logic, simulation, user input, and drawing all go here.
 
 for gamepad in gamepad_array:
-   if any_button_press(gamepad):
-      push_mode(Play)
+   if gamepad.yy:
+      if gamepad.yy > 0:
+         selection = loop(selection+1, 2)
+      else:
+         selection = loop(selection-1, 2)
+   else if gamepad.aa:
+      if (selection == 0):
+         push_mode(Play)
+      if (selection == 1):
+         push_mode(Credits)
+
+draw_sprite(main_menu_sprite, xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y/2))
+
+if (selection == 0):
+   draw_line(xy(115,83), xy(176,81), SELECTED_TEXT_COLOR)
+if (selection == 1):
+   draw_line(xy(226,148), xy(344,141), SELECTED_TEXT_COLOR)
 
 leave
 ────────────────────────────────────────────────────────────────────────
