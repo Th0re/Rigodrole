@@ -54,7 +54,7 @@ if platformTimer >= 1.3:
    platformTimer = 0.0
 
 powerupTimer += dt
-if powerupTimer > 5:
+if powerupTimer > 10:
    createPowerUp()
    powerupTimer = 0.0
 
