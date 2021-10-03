@@ -13,7 +13,8 @@
     "modes": [
         "Play",
         "MainMenu",
-        "GameOver"
+        "GameOver",
+        "Credits"
     ],
     "start_mode": "MainMenu",
     "docs": [],
@@ -32,7 +33,9 @@
         "boing_nico_2": "boing_nico_2.sound.json",
         "boing_nico_3": "boing_nico_3.sound.json",
         "boing_nico_4": "boing_nico_4.sound.json",
-        "main_theme": "main_theme.sound.json"
+        "main_theme": "main_theme.sound.json",
+        "main_menu_sprite": "main_menu.sprite.json",
+        "credits_sprite": "credits.sprite.json"
     },
     "version": 0,
     "min_players": 1,
@@ -81,6 +84,23 @@
             },
             "format": "",
             "quantum": 0
+        },
+        "SELECTED_TEXT_COLOR": {
+            "type": "rgb",
+            "value": {
+                "r": {
+                    "type": "number",
+                    "value": "42%"
+                },
+                "g": {
+                    "type": "number",
+                    "value": "100%"
+                },
+                "b": {
+                    "type": "number",
+                    "value": "100%"
+                }
+            }
         }
     },
     "screenshot_tag": "Rigodrole",
