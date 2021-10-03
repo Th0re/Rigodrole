@@ -30,8 +30,8 @@ else:
 let downPos = xy(SCREEN_SIZE.x/2, SCREEN_SIZE.y*3/4)
 draw_sprite(score_sprite, downPos)
 
-draw_text(font, format_number(scoreP1, "000000"), xy(SCREEN_SIZE.x/4, SCREEN_SIZE.y*7/8), TEXT_COLOR)
-draw_text(font, format_number(scoreP2, "000000"), xy(SCREEN_SIZE.x*3/4, SCREEN_SIZE.y*7/8), TEXT_COLOR)
+draw_text(superFont_15, format_number(scoreP1, "000000"), xy(SCREEN_SIZE.x/4, SCREEN_SIZE.y*7/8), TEXT_COLOR)
+draw_text(superFont_15, format_number(scoreP2, "000000"), xy(SCREEN_SIZE.x*3/4, SCREEN_SIZE.y*7/8), TEXT_COLOR)
 
 if (safeTime <= 0):
    for gamepad in gamepad_array:
