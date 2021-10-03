@@ -11,8 +11,6 @@ let RIGHT_SCREEN_END_X = 384
 let PLATFORM_COLUMN_COUNT = 5
 let PLATFORM_COLUMN_X = 38
 
-play_sound(main_theme, true, 200)
-
 let mainPhysics = make_physics()
 let timer
 const dt = 1/60
@@ -37,7 +35,7 @@ powerupTimer = 0.0
 timer = 0.0
 
 push(players, make_player(gamepad_array[0], xy(SCREEN_SIZE.x/4, -20), player1_sprite, xy(0, SCREEN_SIZE.x/2 - 2)))
-push(players, make_player(gamepad_array[1], xy(SCREEN_SIZE.x*3/4, -20), player1_sprite, xy(SCREEN_SIZE.x/2 + 2, SCREEN_SIZE.x)))
+push(players, make_player(gamepad_array[1], xy(SCREEN_SIZE.x*3/4, -20), player2_sprite, xy(SCREEN_SIZE.x/2 + 2, SCREEN_SIZE.x)))
 
 for player in players:
    physics_add_entity(mainPhysics, player)

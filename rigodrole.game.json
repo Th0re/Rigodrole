@@ -21,6 +21,7 @@
         "font": "quad://fonts/deja-8.font.json",
         "shapes": "quad://sprites/shapes-32x32.sprite.json",
         "player1_sprite": "player1.sprite.json",
+        "player2_sprite": "player2.sprite.json",
         "platform_sprite": "platform.sprite.json",
         "powerup_sprite": "powerup.sprite.json",
         "drawing_sprite": "drawing.sprite.json",
